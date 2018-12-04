@@ -6,21 +6,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AnimeModule {
-    static AnimeApi moviedbAPI;
+    static AnimeApi animeApi;
 
     public static AnimeApi getAPI(){
-        if(moviedbAPI == null){
+        if(animeApi == null){
             final OkHttpClient client = new OkHttpClient.Builder()
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.jikan.moe/v3")
+                    .baseUrl("https://api.jikan.moe/v3/")
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            moviedbAPI = retrofit.create(AnimeApi.class);
+            animeApi = retrofit.create(AnimeApi.class);
         }
-        return moviedbAPI;
+        return animeApi;
     }
 }
