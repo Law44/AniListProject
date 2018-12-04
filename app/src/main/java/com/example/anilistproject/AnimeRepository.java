@@ -17,7 +17,7 @@ public class AnimeRepository {
         animeAPI = AnimeModule.getAPI();
     }
 
-    public LiveData<List<Anime>> getMovies(){
+    public LiveData<List<Anime>> getTopAnimesRating(){
         final MutableLiveData<List<Anime>> lista = new MutableLiveData<>();
 
         animeAPI.getTopAnimesRating().enqueue(new Callback<AnimesList>() {

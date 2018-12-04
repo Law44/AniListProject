@@ -14,7 +14,7 @@ public class AnimeViewModel extends AndroidViewModel {
         animeRepository = new AnimeRepository();
     }
 
-    public LiveData<List<Anime>> getMovies(){
+    public LiveData<List<Anime>> getTopAnimesRating(){
         return animeRepository.getTopAnimesRating();
     }
 }
