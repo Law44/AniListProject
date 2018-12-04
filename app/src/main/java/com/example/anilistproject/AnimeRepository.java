@@ -24,7 +24,7 @@ public class AnimeRepository {
 
             @Override
             public void onResponse(Call<AnimesList> call, Response<AnimesList> response) {
-                lista.setValue(response.body().results);
+                lista.setValue(response.body().top);
             }
 
             @Override

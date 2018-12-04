@@ -20,10 +20,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         mRecyclerView = findViewById(R.id.animeList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        animeListAdapter = new AnimeListAdapter();
+        animeListAdapter = new AnimeListAdapter(MainActivity.this);
         mRecyclerView.setAdapter(animeListAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
