@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.getTopAnimesRating().observe(this, new Observer<List<Anime>>() {
             @Override
             public void onChanged(@Nullable List<Anime> animes) {
+                Log.e("ONCHANGED", animes.toString());
                 animeListAdapter.animeList = animes;
                 animeListAdapter.notifyDataSetChanged();
             }
