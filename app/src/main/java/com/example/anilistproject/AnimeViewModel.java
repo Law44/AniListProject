@@ -11,7 +11,7 @@ public class AnimeViewModel extends AndroidViewModel {
 
     public AnimeViewModel(@NonNull Application application) {
         super(application);
-        animeRepository = new AnimeRepository();
+        animeRepository = new AnimeRepository(application);
     }
 
     public LiveData<List<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
