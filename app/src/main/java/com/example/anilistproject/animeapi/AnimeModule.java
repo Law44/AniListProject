@@ -1,4 +1,4 @@
-package com.example.anilistproject;
+package com.example.anilistproject.animeapi;
 
 import okhttp3.OkHttpClient;
 

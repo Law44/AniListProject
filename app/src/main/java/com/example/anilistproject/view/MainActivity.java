@@ -1,4 +1,4 @@
-package com.example.anilistproject;
+package com.example.anilistproject.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.example.anilistproject.AnimeViewModel;
+import com.example.anilistproject.R;
+import com.example.anilistproject.model.Anime;
 
 import java.util.List;
 

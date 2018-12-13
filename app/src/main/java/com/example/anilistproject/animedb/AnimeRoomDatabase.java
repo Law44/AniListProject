@@ -1,9 +1,11 @@
-package com.example.anilistproject;
+package com.example.anilistproject.animedb;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+
+import com.example.anilistproject.model.Anime;
 
 @Database(entities = {Anime.class}, version = 1)
 public abstract class AnimeRoomDatabase extends RoomDatabase {
@@ -12,7 +14,7 @@ public abstract class AnimeRoomDatabase extends RoomDatabase {
 
     private static volatile AnimeRoomDatabase INSTANCE;
 
-    static AnimeRoomDatabase getDatabase(final Context context) {
+    public static AnimeRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AnimeRoomDatabase.class) {
                 if (INSTANCE == null) {
