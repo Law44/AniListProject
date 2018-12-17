@@ -9,7 +9,6 @@ import retrofit2.http.Path;
 
 public interface AnimeApi {
 
-
     @GET("top/anime/{animeid}/favorite")
     Call<AnimesList> getTopAnimesRating(@Path("animeid") int animeid);
 }

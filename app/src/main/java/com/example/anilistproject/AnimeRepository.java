@@ -21,6 +21,7 @@ import retrofit2.Response;
 
 public class AnimeRepository {
     boolean respuesta;
+    boolean romper = false;
 
     private AnimeDAO mAnimeDao;
     public AnimeApi animeAPI;
@@ -33,50 +34,39 @@ public class AnimeRepository {
     public LiveData<List<Anime>> getTopAnimesRating(){
         respuesta = true;
 
-
-
         final MutableLiveData<List<Anime>> lista = new MutableLiveData<>();
 
-
         lista.postValue(new ArrayList<Anime>());
+        int cont = 999;
+        while (respuesta) {
+            cont++;
 
-
-        for (int i = 1; i<1000; i++)
-          {
-
-
-
-            animeAPI.getTopAnimesRating(i).enqueue(new Callback<AnimesList>() {
+            animeAPI.getTopAnimesRating(cont).enqueue(new Callback<AnimesList>() {
                 @Override
                 public void onResponse(Call<AnimesList> call, Response<AnimesList> response) {
 
-                    if(response.body()!=null) {
+                    if (response.body() != null && response.body().error == null) {
                         List<Anime> newList = new ArrayList<>();
                         newList.addAll(lista.getValue());
                         newList.addAll(response.body().top);
-
-//                        for (int j = 0; j < newList.size(); j++) {
-//                            mAnimeDao.insert(newList.get(j));
-//                        }
-
+                        Log.e("ERROR", "ggg");
                         lista.postValue(newList);
 
-                    }else{
+                    } else {
                         respuesta = false;
                     }
 
-//                    lista.getValue().addAll(response.body().top);
                 }
 
                 @Override
                 public void onFailure(Call<AnimesList> call, Throwable t) {
                 }
             });
-
-            if (!respuesta){
-                break;
-            }
         }
+//            if (romper){
+//                break;
+//            }
+//        }
 
         return lista;
     }
