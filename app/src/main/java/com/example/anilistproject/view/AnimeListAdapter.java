@@ -1,6 +1,5 @@
-package com.example.anilistproject;
+package com.example.anilistproject.view;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
+import com.example.anilistproject.GlideApp;
+import com.example.anilistproject.R;
+import com.example.anilistproject.model.Anime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AnimeListAdapter extends RecyclerView.Adapter<AnimeListAdapter.AnimeListViewHolder>{
