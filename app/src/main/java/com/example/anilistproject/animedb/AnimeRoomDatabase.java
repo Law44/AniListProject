@@ -7,7 +7,7 @@ import android.content.Context;
 
 import com.example.anilistproject.model.Anime;
 
-@Database(entities = {Anime.class}, version = 1)
+@Database(entities = {Anime.class}, version = 2)
 public abstract class AnimeRoomDatabase extends RoomDatabase {
 
     public abstract AnimeDAO animeDAO();
@@ -20,6 +20,7 @@ public abstract class AnimeRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AnimeRoomDatabase.class, "anime_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
