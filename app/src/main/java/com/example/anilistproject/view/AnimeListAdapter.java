@@ -1,6 +1,8 @@
 package com.example.anilistproject.view;
 
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +18,14 @@ import com.example.anilistproject.model.Anime;
 
 import java.util.List;
 
-public class AnimeListAdapter extends RecyclerView.Adapter<AnimeListAdapter.AnimeListViewHolder>{
+public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.AnimeListViewHolder> {
 
     public List<Anime> animeList ;
 
     MainActivity activity;
 
     public  AnimeListAdapter (MainActivity activity){
+        super(DIFF_CALLBACK);
         this.activity = activity;
     }
 
@@ -56,4 +59,20 @@ public class AnimeListAdapter extends RecyclerView.Adapter<AnimeListAdapter.Anim
             poster = itemView.findViewById(R.id.animeImage);
         }
     }
+
+    private static DiffUtil.ItemCallback<Anime> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Anime>() {
+                // Concert details may have changed if reloaded from the database,
+                // but ID is fixed.
+                @Override
+                public boolean areItemsTheSame(Anime oldAnime, Anime newAnime) {
+                    return oldAnime.mal_id == newAnime.mal_id;
+                }
+
+                @Override
+                public boolean areContentsTheSame(Anime oldAnime,
+                                                  Anime newAnime) {
+                    return oldAnime.equals(newAnime);
+                }
+            };
 }
