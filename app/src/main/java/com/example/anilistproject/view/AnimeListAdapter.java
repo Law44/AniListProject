@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.anilistproject.GlideApp;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
@@ -38,7 +39,7 @@ public class AnimeListAdapter extends RecyclerView.Adapter<AnimeListAdapter.Anim
 
 
         holder.title.setText(anime.title);
-        GlideApp.with(holder.itemView.getContext()).load( anime.image_url).into(holder.poster);
+        GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.poster);
     }
 
     @Override
