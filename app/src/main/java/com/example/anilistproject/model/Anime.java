@@ -11,7 +11,7 @@ public class Anime {
     public int mal_id;
 
     public String title;
-    public String image_url;
+    public String image_url = "drawable/placeholder.jpg";
     public String score;
 
 }

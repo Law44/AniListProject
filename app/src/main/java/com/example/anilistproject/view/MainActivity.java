@@ -1,7 +1,9 @@
 package com.example.anilistproject.view;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,16 +34,16 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         animeListAdapter = new AnimeListAdapter(MainActivity.this);
-        mRecyclerView.setAdapter(animeListAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopAnimesRating().observe(this, new Observer<List<Anime>>() {
+        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
             @Override
-            public void onChanged(@Nullable List<Anime> animes) {
-                Log.e("ONCHANGED", animes.toString());
-                animeListAdapter.animeList = animes;
+            public void onChanged(@Nullable PagedList<Anime> pagedList) {
+                animeListAdapter.animeList = pagedList;
                 animeListAdapter.notifyDataSetChanged();
             }
         });
+        mRecyclerView.setAdapter(animeListAdapter);
+
     }
 }

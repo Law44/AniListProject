@@ -3,6 +3,7 @@ package com.example.anilistproject;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
 import com.example.anilistproject.model.Anime;
@@ -17,5 +18,5 @@ public class AnimeViewModel extends AndroidViewModel {
         animeRepository = new AnimeRepository(application);
     }
 
-    public LiveData<List<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
+    public LiveData<PagedList<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
 }

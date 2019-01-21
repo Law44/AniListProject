@@ -2,6 +2,8 @@ package com.example.anilistproject;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 import android.util.Log;
 
 
@@ -28,6 +30,8 @@ public class AnimeRepository {
     public AnimeApi animeAPI;
     Application application;
     private final Executor executor = Executors.newFixedThreadPool(2);
+    public LiveData<PagedList<Anime>> concertList;
+
 
     public AnimeRepository(Application application){
         animeAPI = AnimeModule.getAPI();
@@ -35,9 +39,11 @@ public class AnimeRepository {
 
     }
 
-    public LiveData<List<Anime>> getTopAnimesRating(){
-       refreshAnimeList();
-       return mAnimeDao.getAllAnimes();
+    public LiveData<PagedList<Anime>> getTopAnimesRating(){
+        refreshAnimeList();
+        concertList = new LivePagedListBuilder<>(
+                mAnimeDao.getAllAnimes(), /* page size */ 20).build();
+        return concertList;
     }
 
     public void refreshAnimeList(){

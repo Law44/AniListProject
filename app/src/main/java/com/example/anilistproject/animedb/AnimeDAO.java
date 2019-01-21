@@ -1,6 +1,7 @@
 package com.example.anilistproject.animedb;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -17,7 +18,7 @@ public  interface AnimeDAO {
     void insert(Anime anime);
 
     @Query("SELECT * FROM anime ORDER BY score DESC")
-     LiveData<List<Anime>> getAllAnimes();
+    DataSource.Factory<Integer, Anime> getAllAnimes();
 
     @Query("SELECT * FROM anime WHERE mal_id=:mal_id")
     Anime getAnime(int mal_id);
