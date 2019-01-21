@@ -7,6 +7,7 @@ import android.arch.paging.PagedList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.animeList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
 
         animeListAdapter = new AnimeListAdapter(MainActivity.this);
 

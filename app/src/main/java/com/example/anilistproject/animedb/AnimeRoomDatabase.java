@@ -7,7 +7,7 @@ import android.content.Context;
 
 import com.example.anilistproject.model.Anime;
 
-@Database(entities = {Anime.class}, version = 3)
+@Database(entities = {Anime.class}, version = 4)
 public abstract class AnimeRoomDatabase extends RoomDatabase {
 
     public abstract AnimeDAO animeDAO();

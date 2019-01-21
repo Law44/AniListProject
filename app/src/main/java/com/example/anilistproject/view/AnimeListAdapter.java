@@ -42,6 +42,8 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
 
         holder.title.setText(anime.title);
+        holder.episodes.setText(String.valueOf("Episodes: " + anime.episodes));
+        holder.score.setText(String.valueOf("Score: " + anime.score));
         GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
     }
 
@@ -51,12 +53,15 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
     }
 
     class AnimeListViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
+        TextView title, episodes, score;
         ImageView poster;
         public AnimeListViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.animeTitle);
+            episodes = itemView.findViewById(R.id.episodes);
+            score = itemView.findViewById(R.id.score);
             poster = itemView.findViewById(R.id.animeImage);
+
         }
     }
 

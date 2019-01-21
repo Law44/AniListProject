@@ -83,7 +83,6 @@ public class AnimeRepository {
                 animeAPI.getAnime(anime.mal_id).enqueue(new Callback<Anime>() {
                     @Override
                     public void onResponse(Call<Anime> call, final Response<Anime> response) {
-                        Log.e("animebody", String.valueOf(response.body()));
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {

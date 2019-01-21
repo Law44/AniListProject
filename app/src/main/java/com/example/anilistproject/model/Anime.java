@@ -12,6 +12,7 @@ public class Anime {
 
     public String title;
     public String image_url;
-    public String score;
+    public float score;
+    public int episodes;
 
 }
