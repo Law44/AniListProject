@@ -42,7 +42,7 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
 
         holder.title.setText(anime.title);
-        GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.poster);
+        GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
     }
 
     @Override
