@@ -7,6 +7,7 @@ import android.arch.paging.PagedList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,8 +44,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable PagedList<Anime> pagedList) {
                 animeListAdapter.animeList = pagedList;
+
             }
         });
+
+        mViewModel.timer.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                animeListAdapter.notifyDataSetChanged();
+            }
+        });
+
         mRecyclerView.setAdapter(animeListAdapter);
 
     }
