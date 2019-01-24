@@ -14,5 +14,6 @@ public class Anime {
     public String image_url;
     public float score;
     public int episodes;
+    public int rank;
 
 }

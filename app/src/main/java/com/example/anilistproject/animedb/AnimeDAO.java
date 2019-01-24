@@ -17,7 +17,7 @@ public  interface AnimeDAO {
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     void insert(Anime anime);
 
-    @Query("SELECT * FROM anime ORDER BY score DESC")
+    @Query("SELECT * FROM anime WHERE rank != 0 ORDER BY rank ASC LIMIT 60")
     DataSource.Factory<Integer, Anime> getAllAnimes();
 
     @Query("SELECT * FROM anime WHERE mal_id=:mal_id")
