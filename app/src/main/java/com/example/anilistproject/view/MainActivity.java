@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable PagedList<Anime> pagedList) {
                 animeListAdapter.animeList = pagedList;
-                animeListAdapter.notifyDataSetChanged();
             }
         });
         mRecyclerView.setAdapter(animeListAdapter);

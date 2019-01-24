@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
-import android.util.Log;
 
 
 import com.example.anilistproject.animeapi.AnimeApi;
@@ -15,7 +14,6 @@ import com.example.anilistproject.model.Anime;
 import com.example.anilistproject.model.AnimesList;
 
 
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -30,7 +28,7 @@ public class AnimeRepository {
     public AnimeApi animeAPI;
     Application application;
     private final Executor executor = Executors.newFixedThreadPool(2);
-    public LiveData<PagedList<Anime>> concertList;
+    public LiveData<PagedList<Anime>> animeList;
 
 
     public AnimeRepository(Application application){
@@ -41,9 +39,10 @@ public class AnimeRepository {
 
     public LiveData<PagedList<Anime>> getTopAnimesRating(){
         refreshAnimeList();
-        concertList = new LivePagedListBuilder<>(
-                mAnimeDao.getAllAnimes(), /* page size */ 20).build();
-        return concertList;
+        PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
+        animeList = new LivePagedListBuilder<>(
+                mAnimeDao.getAllAnimes(), /* page size */ conf).build();
+        return animeList;
     }
 
     public void refreshAnimeList(){

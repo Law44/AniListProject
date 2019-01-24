@@ -42,10 +42,16 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
 
         holder.title.setText(anime.title);
-        holder.episodes.setText(String.valueOf("Episodes: " + anime.episodes));
         holder.score.setText(String.valueOf("Score: " + anime.score));
         GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
         holder.rank.setText(String.valueOf("Rank: " + anime.rank));
+        if (anime.episodes > 1) {
+            holder.episodes.setText(String.valueOf("Episodes: " + anime.episodes));
+        }
+        else {
+            holder.episodes.setText(anime.type);
+        }
+
     }
 
     @Override

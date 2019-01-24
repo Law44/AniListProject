@@ -15,5 +15,6 @@ public class Anime {
     public float score;
     public int episodes;
     public int rank;
+    public String type;
 
 }
