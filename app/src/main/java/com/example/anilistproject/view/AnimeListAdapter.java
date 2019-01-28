@@ -16,11 +16,12 @@ import com.example.anilistproject.GlideApp;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.AnimeListViewHolder> {
 
-    public List<Anime> animeList ;
+    public  List<Anime> animeList = new ArrayList<>();
 
     MainActivity activity;
 
@@ -44,7 +45,7 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
         holder.title.setText(anime.title);
         holder.score.setText(String.valueOf("Score: " + anime.score));
         GlideApp.with(holder.itemView.getContext()).load( anime.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
-        holder.rank.setText(String.valueOf("Rank: " + anime.rank));
+        holder.rank.setText(String.valueOf("Rank: " + (position+1)));
         if (anime.episodes > 1) {
             holder.episodes.setText(String.valueOf("Episodes: " + anime.episodes));
         }

@@ -31,6 +31,7 @@ public class AnimeRepository {
     public LiveData<PagedList<Anime>> animeList;
 
 
+
     public AnimeRepository(Application application){
         animeAPI = AnimeModule.getAPI();
         mAnimeDao = AnimeRoomDatabase.getDatabase(application).animeDAO();
@@ -55,6 +56,7 @@ public class AnimeRepository {
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
+
                                 for(Anime anime : response.body().top){
                                     updateAnime(anime);
                                 }
