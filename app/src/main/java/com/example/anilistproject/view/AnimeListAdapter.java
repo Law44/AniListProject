@@ -55,6 +55,7 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
     }
 
+
     @Override
     public int getItemCount() {
         return (animeList != null ? animeList.size() : 0);
