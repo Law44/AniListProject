@@ -9,13 +9,14 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Manga;
 
 import java.util.List;
 
 public class AnimeViewModel extends AndroidViewModel {
     private AnimeRepository animeRepository;
 
-    public MutableLiveData<Boolean> timer = new MutableLiveData<>();
+    public  MutableLiveData<Boolean> timer = new MutableLiveData<>();
 
     public AnimeViewModel(@NonNull Application application) {
         super(application);
@@ -34,4 +35,5 @@ public class AnimeViewModel extends AndroidViewModel {
     }
 
     public LiveData<PagedList<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
+    public LiveData<PagedList<Manga>> getTopMangaRating(){ return animeRepository.getTopMangaRating(); }
 }

@@ -1,5 +1,7 @@
 package com.example.anilistproject.view;
 
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,7 +23,11 @@ import android.widget.TextView;
 
 import com.example.anilistproject.R;
 
+
+
 public class PrincipalActivity extends AppCompatActivity {
+
+    Observer<Boolean>  nTimer;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -58,14 +64,6 @@ public class PrincipalActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -95,37 +93,7 @@ public class PrincipalActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_principal, container, false);
-
-
-            return rootView;
-        }
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -133,15 +101,49 @@ public class PrincipalActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        MangaFragment mf;
+        RankFragment rf2;
+
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
+            mf = new MangaFragment();
+            rf2= new RankFragment();
+            nTimer = new Observer<Boolean>() {
+                @Override
+                public void onChanged(@Nullable Boolean aBoolean) {
+                  rf2.animeListAdapter.notifyDataSetChanged();
+                  mf.mangaListAdapter.notifyDataSetChanged();
+                }
+            };
+
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position){
+                case 0:
+                    mf.setbTimer(nTimer);
+                    mf.setApplication(PrincipalActivity.this);
+                    return mf;
+                case 1:
+                    rf2.setbTimer(nTimer);
+                    rf2.setApplication(PrincipalActivity.this);
+                    return rf2;
+
+                case 2:
+                    RankFragment rf3 = new RankFragment();
+                    rf3.setApplication(PrincipalActivity.this);
+                    return rf3;
+
+            }
+            RankFragment test = new RankFragment();
+            test.setApplication(PrincipalActivity.this);
+            return test;
+
+
         }
 
         @Override

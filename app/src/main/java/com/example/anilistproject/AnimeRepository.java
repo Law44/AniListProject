@@ -12,6 +12,8 @@ import com.example.anilistproject.animedb.AnimeDAO;
 import com.example.anilistproject.animedb.AnimeRoomDatabase;
 import com.example.anilistproject.model.Anime;
 import com.example.anilistproject.model.AnimesList;
+import com.example.anilistproject.model.Manga;
+import com.example.anilistproject.model.MangaList;
 
 
 import java.util.concurrent.Executor;
@@ -29,6 +31,7 @@ public class AnimeRepository {
     Application application;
     private final Executor executor = Executors.newFixedThreadPool(2);
     public LiveData<PagedList<Anime>> animeList;
+    public LiveData<PagedList<Manga>> mangaList;
 
 
 
@@ -96,6 +99,72 @@ public class AnimeRepository {
 
                     @Override
                     public void onFailure(Call<Anime> call, Throwable t) {
+                    }
+                });
+            }
+        }
+    }
+
+
+    /*------------------------------Manga-----------------------*/
+    public LiveData<PagedList<Manga>> getTopMangaRating(){
+        refreshMangaList();
+        PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
+        mangaList = new LivePagedListBuilder<>(
+                mAnimeDao.getAllManga(), /* page size */ conf).build();
+        return mangaList;
+    }
+
+    private void refreshMangaList() {
+
+        for (int i = 1; i<50; i++) {
+            animeAPI.getTopMangasRating(i).enqueue(new Callback<MangaList>() {
+                @Override
+                public void onResponse(Call<MangaList> call, final Response<MangaList> response) {
+                    if(response.body()!=null) {
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                for(Manga manga : response.body().top){
+                                    updateManga(manga);
+                                }
+                            }
+                        });
+                    }
+                }
+                @Override
+                public void onFailure(Call<MangaList> call, Throwable t) {
+                }
+            });
+
+        }
+
+
+    }
+
+    public void updateManga (final Manga manga){
+        if (manga!=null) {
+
+            Manga mangaFromDb = mAnimeDao.getManga(manga.mal_id);
+
+            if (mangaFromDb == null) {
+
+                animeAPI.getManga(manga.mal_id).enqueue(new Callback<Manga>() {
+                    @Override
+                    public void onResponse(Call<Manga> call, final Response<Manga> response) {
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response.body()!=null) {
+                                    mAnimeDao.insertManga(response.body());
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<Manga> call, Throwable t) {
                     }
                 });
             }

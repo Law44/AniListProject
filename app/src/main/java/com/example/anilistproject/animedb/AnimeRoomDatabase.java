@@ -6,8 +6,9 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Manga;
 
-@Database(entities = {Anime.class}, version = 2)
+@Database(entities = {Anime.class,Manga.class}, version = 3)
 public abstract class AnimeRoomDatabase extends RoomDatabase {
 
     public abstract AnimeDAO animeDAO();

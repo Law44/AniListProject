@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.anilistproject.GlideApp;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Manga;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,10 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
     public  List<Anime> animeList = new ArrayList<>();
 
-    MainActivity activity;
 
-    public  AnimeListAdapter (MainActivity activity){
+    PrincipalActivity activity;
+
+    public  AnimeListAdapter (PrincipalActivity activity){
         super(DIFF_CALLBACK);
         this.activity = activity;
     }
