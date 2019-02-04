@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import com.example.anilistproject.model.Character;
 import com.example.anilistproject.model.Manga;
 import com.example.anilistproject.model.Anime;
 
@@ -32,5 +33,18 @@ public  interface AnimeDAO {
 
     @Query("SELECT * FROM manga WHERE mal_id=:mal_id")
     Manga getManga(int mal_id);
+
+
+    /*----------------------Character------------------------------*/
+
+    @Insert(onConflict=OnConflictStrategy.REPLACE)
+    void insertCharacter(Character character);
+
+    @Query("SELECT * FROM character LIMIT 50")
+    DataSource.Factory<Integer, Character> getAllCharacter();
+
+    @Query("SELECT * FROM character WHERE mal_id=:mal_id")
+    Character getCharacter(int mal_id);
+
 
 }

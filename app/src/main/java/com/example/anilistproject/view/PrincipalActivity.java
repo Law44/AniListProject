@@ -101,8 +101,7 @@ public class PrincipalActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        MangaFragment mf;
-        RankFragment rf2;
+
 
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -111,37 +110,30 @@ public class PrincipalActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            mf = new MangaFragment();
-            rf2= new RankFragment();
-            nTimer = new Observer<Boolean>() {
-                @Override
-                public void onChanged(@Nullable Boolean aBoolean) {
-                  rf2.animeListAdapter.notifyDataSetChanged();
-                  mf.mangaListAdapter.notifyDataSetChanged();
-                }
-            };
+
+
 
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
-                    mf.setbTimer(nTimer);
-                    mf.setApplication(PrincipalActivity.this);
-                    return mf;
-                case 1:
-                    rf2.setbTimer(nTimer);
+                    RankFragment rf2= new RankFragment();
                     rf2.setApplication(PrincipalActivity.this);
                     return rf2;
 
+                case 1:
+                    MangaFragment mf = new MangaFragment();
+                    mf.setApplication(PrincipalActivity.this);
+                    return mf;
+
                 case 2:
-                    RankFragment rf3 = new RankFragment();
-                    rf3.setApplication(PrincipalActivity.this);
-                    return rf3;
+                    CharacterFragment cf = new CharacterFragment();
+                    cf.setApplication(PrincipalActivity.this);
+                    return cf;
 
             }
-            RankFragment test = new RankFragment();
-            test.setApplication(PrincipalActivity.this);
-            return test;
+
+            return null;
 
 
         }

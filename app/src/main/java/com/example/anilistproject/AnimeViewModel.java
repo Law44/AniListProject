@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Character;
 import com.example.anilistproject.model.Manga;
 
 import java.util.List;
@@ -16,12 +17,17 @@ import java.util.List;
 public class AnimeViewModel extends AndroidViewModel {
     private AnimeRepository animeRepository;
 
-    public  MutableLiveData<Boolean> timer = new MutableLiveData<>();
+    public  MutableLiveData<Boolean> timerAnime = new MutableLiveData<>();
+    public  MutableLiveData<Boolean> timerManga = new MutableLiveData<>();
+    public  MutableLiveData<Boolean> timerX = new MutableLiveData<>();
+
 
     public AnimeViewModel(@NonNull Application application) {
         super(application);
         animeRepository = new AnimeRepository(application);
-        timer.postValue(true);
+        timerAnime.postValue(true);
+        timerManga.postValue(true);
+        timerX.postValue(true);
         startTimer();
     }
 
@@ -29,11 +35,15 @@ public class AnimeViewModel extends AndroidViewModel {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                timer.postValue(!timer.getValue());
+                timerAnime.postValue(!timerAnime.getValue());
+                timerManga.postValue(!timerManga.getValue());
+                timerX.postValue(!timerX.getValue());
             }
-        }, 1000);
+        }, 50);
     }
 
     public LiveData<PagedList<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
     public LiveData<PagedList<Manga>> getTopMangaRating(){ return animeRepository.getTopMangaRating(); }
+    public LiveData<PagedList<Character>> getTopCharacterRating(){ return animeRepository.getTopCharacterRating(); }
+
 }

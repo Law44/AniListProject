@@ -1,13 +1,12 @@
 package com.example.anilistproject.view;
 
-import android.app.Application;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,21 +17,18 @@ import android.view.ViewGroup;
 
 import com.example.anilistproject.AnimeViewModel;
 import com.example.anilistproject.R;
-import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Character;
 
 
-
-public class RankFragment extends Fragment {
-
+public class CharacterFragment extends Fragment {
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
-    public  AnimeListAdapter animeListAdapter;
-
-
-
-
+    public  CharacterListAdapter charac;
 
     PrincipalActivity application;
+
+
+
 
     public void setApplication(PrincipalActivity application) {
         this.application = application;
@@ -42,75 +38,45 @@ public class RankFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        Log.e("CICLO","OnCreateView");
 
-
-        View mView = inflater.inflate(R.layout.fragment_rank, container, false);
-        mRecyclerView = mView.findViewById(R.id.animeList);
+        View mView = inflater.inflate(R.layout.fragment_character, container, false);
+        mRecyclerView = mView.findViewById(R.id.characterList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(application));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
 
-        animeListAdapter = new AnimeListAdapter(application);
-
+        charac = new CharacterListAdapter(application);
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
+        mViewModel.getTopCharacterRating().observe(this, new Observer<PagedList<Character>>() {
             @Override
-            public void onChanged(@Nullable PagedList<Anime> pagedList) {
-                animeListAdapter.animeList = pagedList;
-
-
+            public void onChanged(@Nullable PagedList<Character> pagedList) {
+                charac.characterList = pagedList;
 
             }
         });
 
-        mViewModel.timerAnime.observe(this, new Observer<Boolean>() {
+
+        mViewModel.timerX.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                animeListAdapter.notifyDataSetChanged();
+                charac.notifyDataSetChanged();
 
             }
         });
 
-
-        mRecyclerView.setAdapter(animeListAdapter);
-
-
-
+        mRecyclerView.setAdapter(charac);
 
 
         return mView;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.e("CICLO","OnPause");
+    public void onStart() {
+        super.onStart();
+        Log.e("ABC", "onSTART");
+        charac.notifyDataSetChanged();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        onDestroy();
-        Log.e("CICLO","OnDestroyView");
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("CICLO","OnDestroy");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e("CICLO","OnStop");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("CICLO","OnResume");
-    }
 }

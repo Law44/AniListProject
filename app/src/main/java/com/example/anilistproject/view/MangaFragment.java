@@ -25,11 +25,9 @@ public class MangaFragment extends Fragment {
     public  MangaListAdapter mangaListAdapter;
 
     PrincipalActivity application;
-    Observer<Boolean> bTimer;
 
-    public void setbTimer(Observer<Boolean> bTimer) {
-        this.bTimer = bTimer;
-    }
+
+
 
     public void setApplication(PrincipalActivity application) {
         this.application = application;
@@ -40,8 +38,8 @@ public class MangaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View mView = inflater.inflate(R.layout.fragment_rank, container, false);
-        mRecyclerView = mView.findViewById(R.id.animeList);
+        View mView = inflater.inflate(R.layout.fragment_manga, container, false);
+        mRecyclerView = mView.findViewById(R.id.mangaList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(application));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -59,7 +57,13 @@ public class MangaFragment extends Fragment {
 
 
 
-        mViewModel.timer.observe(this, bTimer);
+        mViewModel.timerManga.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                mangaListAdapter.notifyDataSetChanged();
+
+            }
+        });
 
         mRecyclerView.setAdapter(mangaListAdapter);
 
@@ -70,25 +74,31 @@ public class MangaFragment extends Fragment {
         return mView;
     }
 
-//    @Override
+    @Override
+    public void onStart() {
+        super.onStart();
+        mangaListAdapter.notifyDataSetChanged();
+    }
+
+    //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.fragment_rank);
 //
 //
 //
-//        mRecyclerView = findViewById(R.id.mangaList);
+//        mRecyclerView = findViewById(R.id.characterList);
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 //
 //
-//        mangaListAdapter = new AnimeListAdapter(RankFragment.this);
+//        charac = new AnimeListAdapter(RankFragment.this);
 //
 //        mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
 //        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
 //            @Override
 //            public void onChanged(@Nullable PagedList<Anime> pagedList) {
-//                mangaListAdapter.mangaList = pagedList;
+//                charac.characterList = pagedList;
 //
 //            }
 //        });
@@ -96,11 +106,11 @@ public class MangaFragment extends Fragment {
 //        mViewModel.timer.observe(this, new Observer<Boolean>() {
 //            @Override
 //            public void onChanged(@Nullable Boolean aBoolean) {
-//                mangaListAdapter.notifyDataSetChanged();
+//                charac.notifyDataSetChanged();
 //            }
 //        });
 //
-//        mRecyclerView.setAdapter(mangaListAdapter);
+//        mRecyclerView.setAdapter(charac);
 //
 //    }
 }

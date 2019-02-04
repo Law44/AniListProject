@@ -12,6 +12,8 @@ import com.example.anilistproject.animedb.AnimeDAO;
 import com.example.anilistproject.animedb.AnimeRoomDatabase;
 import com.example.anilistproject.model.Anime;
 import com.example.anilistproject.model.AnimesList;
+import com.example.anilistproject.model.Character;
+import com.example.anilistproject.model.CharacterList;
 import com.example.anilistproject.model.Manga;
 import com.example.anilistproject.model.MangaList;
 
@@ -32,6 +34,7 @@ public class AnimeRepository {
     private final Executor executor = Executors.newFixedThreadPool(2);
     public LiveData<PagedList<Anime>> animeList;
     public LiveData<PagedList<Manga>> mangaList;
+    public LiveData<PagedList<Character>> characterList;
 
 
 
@@ -165,6 +168,70 @@ public class AnimeRepository {
 
                     @Override
                     public void onFailure(Call<Manga> call, Throwable t) {
+                    }
+                });
+            }
+        }
+    }
+
+    /*------------------------------Character-----------------------*/
+    public LiveData<PagedList<Character>> getTopCharacterRating(){
+        refreshCharacterList();
+        PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
+        characterList = new LivePagedListBuilder<>(
+                mAnimeDao.getAllCharacter(), /* page size */ conf).build();
+        return characterList;
+    }
+
+    private void refreshCharacterList() {
+
+        for (int i = 1; i<50; i++) {
+            animeAPI.getTopCharacterRating(i).enqueue(new Callback<CharacterList>() {
+                @Override
+                public void onResponse(Call<CharacterList> call, final Response<CharacterList> response) {
+                    if(response.body()!=null) {
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(Character character : response.body().top){
+                                    updateCharacter(character);
+                                }
+                            }
+                        });
+                    }
+                }
+                @Override
+                public void onFailure(Call<CharacterList> call, Throwable t) {
+                }
+            });
+
+        }
+
+
+    }
+
+    public void updateCharacter (final Character character){
+        if (character!=null) {
+
+            Character daoCharacter = mAnimeDao.getCharacter(character.mal_id);
+
+            if (daoCharacter == null) {
+
+                animeAPI.getCharacter(character.mal_id).enqueue(new Callback<Character>() {
+                    @Override
+                    public void onResponse(Call<Character> call, final Response<Character> response) {
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response.body()!=null) {
+                                    mAnimeDao.insertCharacter(response.body());
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<Character> call, Throwable t) {
                     }
                 });
             }
