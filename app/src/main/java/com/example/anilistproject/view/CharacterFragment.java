@@ -23,16 +23,7 @@ import com.example.anilistproject.model.Character;
 public class CharacterFragment extends Fragment {
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
-    public  CharacterListAdapter charac;
-
-    PrincipalActivity application;
-
-
-
-
-    public void setApplication(PrincipalActivity application) {
-        this.application = application;
-    }
+    public  CharacterListAdapter characterListAdapter;
 
     @Nullable
     @Override
@@ -41,42 +32,21 @@ public class CharacterFragment extends Fragment {
 
         View mView = inflater.inflate(R.layout.fragment_character, container, false);
         mRecyclerView = mView.findViewById(R.id.characterList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(application));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-
-        charac = new CharacterListAdapter(application);
+        characterListAdapter = new CharacterListAdapter();
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
         mViewModel.getTopCharacterRating().observe(this, new Observer<PagedList<Character>>() {
             @Override
             public void onChanged(@Nullable PagedList<Character> pagedList) {
-                charac.characterList = pagedList;
-
+                characterListAdapter.submitList(pagedList);
             }
         });
 
-
-        mViewModel.timerX.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                charac.notifyDataSetChanged();
-
-            }
-        });
-
-        mRecyclerView.setAdapter(charac);
-
+        mRecyclerView.setAdapter(characterListAdapter);
 
         return mView;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e("ABC", "onSTART");
-        charac.notifyDataSetChanged();
-    }
-
-
 }

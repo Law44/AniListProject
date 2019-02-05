@@ -17,33 +17,35 @@ import java.util.List;
 public class AnimeViewModel extends AndroidViewModel {
     private AnimeRepository animeRepository;
 
-    public  MutableLiveData<Boolean> timerAnime = new MutableLiveData<>();
-    public  MutableLiveData<Boolean> timerManga = new MutableLiveData<>();
-    public  MutableLiveData<Boolean> timerX = new MutableLiveData<>();
+//    public  MutableLiveData<Boolean> timerAnime = new MutableLiveData<>();
+//    public  MutableLiveData<Boolean> timerManga = new MutableLiveData<>();
+//    public  MutableLiveData<Boolean> timerX = new MutableLiveData<>();
 
 
     public AnimeViewModel(@NonNull Application application) {
         super(application);
         animeRepository = new AnimeRepository(application);
-        timerAnime.postValue(true);
-        timerManga.postValue(true);
-        timerX.postValue(true);
-        startTimer();
+//        timerAnime.postValue(true);
+//        timerManga.postValue(true);
+//        timerX.postValue(true);
+//        startTimer();
     }
 
-    void startTimer(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                timerAnime.postValue(!timerAnime.getValue());
-                timerManga.postValue(!timerManga.getValue());
-                timerX.postValue(!timerX.getValue());
-            }
-        }, 50);
-    }
+//    void startTimer(){
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                timerAnime.postValue(!timerAnime.getValue());
+//                timerManga.postValue(!timerManga.getValue());
+//                timerX.postValue(!timerX.getValue());
+//            }
+//        }, 50);
+//    }
 
     public LiveData<PagedList<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
+
     public LiveData<PagedList<Manga>> getTopMangaRating(){ return animeRepository.getTopMangaRating(); }
+
     public LiveData<PagedList<Character>> getTopCharacterRating(){ return animeRepository.getTopCharacterRating(); }
 
 }

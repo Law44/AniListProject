@@ -26,22 +26,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AnimeRepository {
-    boolean respuesta;
 
     private AnimeDAO mAnimeDao;
     public AnimeApi animeAPI;
-    Application application;
+
     private final Executor executor = Executors.newFixedThreadPool(2);
     public LiveData<PagedList<Anime>> animeList;
     public LiveData<PagedList<Manga>> mangaList;
     public LiveData<PagedList<Character>> characterList;
 
 
-
     public AnimeRepository(Application application){
         animeAPI = AnimeModule.getAPI();
         mAnimeDao = AnimeRoomDatabase.getDatabase(application).animeDAO();
-
     }
 
     public LiveData<PagedList<Anime>> getTopAnimesRating(){
@@ -62,7 +59,6 @@ public class AnimeRepository {
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
-
                                 for(Anime anime : response.body().top){
                                     updateAnime(anime);
                                 }
@@ -74,10 +70,7 @@ public class AnimeRepository {
                 public void onFailure(Call<AnimesList> call, Throwable t) {
                 }
             });
-
         }
-
-
     }
 
     public void updateAnime (final Anime anime){
@@ -142,8 +135,6 @@ public class AnimeRepository {
             });
 
         }
-
-
     }
 
     public void updateManga (final Manga manga){

@@ -24,15 +24,6 @@ public class MangaFragment extends Fragment {
     private RecyclerView mRecyclerView;
     public  MangaListAdapter mangaListAdapter;
 
-    PrincipalActivity application;
-
-
-
-
-    public void setApplication(PrincipalActivity application) {
-        this.application = application;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,77 +31,21 @@ public class MangaFragment extends Fragment {
 
         View mView = inflater.inflate(R.layout.fragment_manga, container, false);
         mRecyclerView = mView.findViewById(R.id.mangaList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(application));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-
-        mangaListAdapter = new MangaListAdapter(application);
+        mangaListAdapter = new MangaListAdapter();
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
         mViewModel.getTopMangaRating().observe(this, new Observer<PagedList<Manga>>() {
             @Override
             public void onChanged(@Nullable PagedList<Manga> pagedList) {
-                mangaListAdapter.mangaList = pagedList;
-
-            }
-        });
-
-
-
-        mViewModel.timerManga.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                mangaListAdapter.notifyDataSetChanged();
-
+                mangaListAdapter.submitList(pagedList);
             }
         });
 
         mRecyclerView.setAdapter(mangaListAdapter);
 
-
-
-
-
         return mView;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mangaListAdapter.notifyDataSetChanged();
-    }
-
-    //    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_rank);
-//
-//
-//
-//        mRecyclerView = findViewById(R.id.characterList);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
-//
-//
-//        charac = new AnimeListAdapter(RankFragment.this);
-//
-//        mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-//        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
-//            @Override
-//            public void onChanged(@Nullable PagedList<Anime> pagedList) {
-//                charac.characterList = pagedList;
-//
-//            }
-//        });
-//
-//        mViewModel.timer.observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(@Nullable Boolean aBoolean) {
-//                charac.notifyDataSetChanged();
-//            }
-//        });
-//
-//        mRecyclerView.setAdapter(charac);
-//
-//    }
 }

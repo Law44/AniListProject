@@ -21,14 +21,8 @@ import java.util.List;
 
 public class MangaListAdapter extends PagedListAdapter<Manga, MangaListAdapter.MangaListViewHolder> {
 
-    public  List<Manga> mangaList = new ArrayList<>();
-
-
-    PrincipalActivity activity;
-
-    public MangaListAdapter(PrincipalActivity activity){
+    public MangaListAdapter(){
         super(DIFF_CALLBACK);
-        this.activity = activity;
     }
 
     @NonNull
@@ -40,19 +34,12 @@ public class MangaListAdapter extends PagedListAdapter<Manga, MangaListAdapter.M
 
     @Override
     public void onBindViewHolder(@NonNull MangaListViewHolder holder, int position) {
-        Manga manga = mangaList.get(position);
-
+        Manga manga = getItem(position);
 
         holder.title.setText(manga.title);
         holder.score.setText(String.valueOf("Score: " + manga.score));
         GlideApp.with(holder.itemView.getContext()).load( manga.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
         holder.rank.setText(String.valueOf("Rank: " + (position+1)));
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return (mangaList != null ? mangaList.size() : 0);
     }
 
     class MangaListViewHolder extends RecyclerView.ViewHolder {

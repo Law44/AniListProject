@@ -21,14 +21,9 @@ import java.util.List;
 
 public class CharacterListAdapter extends PagedListAdapter<Character, CharacterListAdapter.CharacterListViewHolder> {
 
-    public List<Character> characterList = new ArrayList<>();
 
-
-    PrincipalActivity activity;
-
-    public CharacterListAdapter(PrincipalActivity activity){
+    public CharacterListAdapter(){
         super(DIFF_CALLBACK);
-        this.activity = activity;
     }
 
     @NonNull
@@ -40,8 +35,7 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
 
     @Override
     public void onBindViewHolder(@NonNull CharacterListAdapter.CharacterListViewHolder holder, int position) {
-        Character chara = characterList.get(position);
-
+        Character chara = getItem(position);
 
         holder.title.setText(chara.title);
 
@@ -50,11 +44,6 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
         holder.rank.setText(String.valueOf("Rank: " + (position+1)));
     }
 
-
-    @Override
-    public int getItemCount() {
-        return (characterList != null ? characterList.size() : 0);
-    }
 
     class CharacterListViewHolder extends RecyclerView.ViewHolder {
         TextView title,   rank;

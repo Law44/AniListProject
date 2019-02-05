@@ -10,26 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.anilistproject.GlideApp;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
-import com.example.anilistproject.model.Manga;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.AnimeListViewHolder> {
 
-    public  List<Anime> animeList = new ArrayList<>();
-
-
-    PrincipalActivity activity;
-
-    public  AnimeListAdapter (PrincipalActivity activity){
+    public  AnimeListAdapter (){
         super(DIFF_CALLBACK);
-        this.activity = activity;
     }
 
     @NonNull
@@ -41,7 +30,7 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
 
     @Override
     public void onBindViewHolder(@NonNull AnimeListViewHolder holder, int position) {
-        Anime anime = animeList.get(position);
+        Anime anime = getItem(position); // NO -> animeList.get(position);
 
 
         holder.title.setText(anime.title);
@@ -54,13 +43,6 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
         else {
             holder.episodes.setText(anime.type);
         }
-
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return (animeList != null ? animeList.size() : 0);
     }
 
     class AnimeListViewHolder extends RecyclerView.ViewHolder {
