@@ -9,7 +9,7 @@ import com.example.anilistproject.model.Anime;
 import com.example.anilistproject.model.Character;
 import com.example.anilistproject.model.Manga;
 
-@Database(entities = {Anime.class,Manga.class,Character.class}, version = 2)
+@Database(entities = {Anime.class,Manga.class,Character.class}, version = 1)
 public abstract class AnimeRoomDatabase extends RoomDatabase {
 
     public abstract AnimeDAO animeDAO();

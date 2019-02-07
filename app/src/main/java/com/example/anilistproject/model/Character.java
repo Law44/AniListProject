@@ -2,7 +2,12 @@ package com.example.anilistproject.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
+
+import com.example.anilistproject.animedb.GithubTypeConverters;
+
+import java.util.List;
 
 @Entity
 public class Character {
@@ -12,9 +17,12 @@ public class Character {
 
     public String title;
     public String image_url;
-    //public float score;
-
     public int rank;
+    public String name;
+    public String animeName;
+
+    @TypeConverters(GithubTypeConverters.class)
+    public List<Animeography> animeography;
 
 
 }

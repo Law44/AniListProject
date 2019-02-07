@@ -51,7 +51,7 @@ public class AnimeRepository {
 
     public void refreshAnimeList(){
 
-        for (int i = 1; i<50; i++) {
+        for (int i = 1; i<3; i++) {
             animeAPI.getTopAnimesRating(i).enqueue(new Callback<AnimesList>() {
                 @Override
                 public void onResponse(Call<AnimesList> call, final Response<AnimesList> response) {
@@ -113,7 +113,7 @@ public class AnimeRepository {
 
     private void refreshMangaList() {
 
-        for (int i = 1; i<50; i++) {
+        for (int i = 1; i<3; i++) {
             animeAPI.getTopMangasRating(i).enqueue(new Callback<MangaList>() {
                 @Override
                 public void onResponse(Call<MangaList> call, final Response<MangaList> response) {
@@ -176,7 +176,7 @@ public class AnimeRepository {
 
     private void refreshCharacterList() {
 
-        for (int i = 1; i<50; i++) {
+        for (int i = 1; i<3; i++) {
             animeAPI.getTopCharacterRating(i).enqueue(new Callback<CharacterList>() {
                 @Override
                 public void onResponse(Call<CharacterList> call, final Response<CharacterList> response) {

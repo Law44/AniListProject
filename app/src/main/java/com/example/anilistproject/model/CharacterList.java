@@ -6,4 +6,5 @@ public class CharacterList {
 
     public List<Character> top;
     public String error;
+
 }

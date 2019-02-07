@@ -37,8 +37,8 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
     public void onBindViewHolder(@NonNull CharacterListAdapter.CharacterListViewHolder holder, int position) {
         Character chara = getItem(position);
 
-        holder.title.setText(chara.title);
-
+        holder.title.setText(chara.name);
+        holder.anime.setText(chara.animeography.get(0).name);
         GlideApp.with(holder.itemView.getContext()).load( chara.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
 
         holder.rank.setText(String.valueOf("Rank: " + (position+1)));
@@ -46,12 +46,12 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
 
 
     class CharacterListViewHolder extends RecyclerView.ViewHolder {
-        TextView title,   rank;
+        TextView title,   rank, anime;
         ImageView poster;
         public CharacterListViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.characterTitle);
-
+            anime = itemView.findViewById(R.id.characterAnime);
             poster = itemView.findViewById(R.id.characterImage);
             rank = itemView.findViewById(R.id.characterRank);
 
