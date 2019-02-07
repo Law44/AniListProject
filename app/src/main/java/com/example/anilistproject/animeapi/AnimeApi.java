@@ -2,6 +2,10 @@ package com.example.anilistproject.animeapi;
 
 import com.example.anilistproject.model.Anime;
 import com.example.anilistproject.model.AnimesList;
+import com.example.anilistproject.model.Character;
+import com.example.anilistproject.model.CharacterList;
+import com.example.anilistproject.model.Manga;
+import com.example.anilistproject.model.MangaList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,6 +20,18 @@ public interface AnimeApi {
 
     @GET("anime/{mal_id}")
     Call<Anime> getAnime(@Path("mal_id") int mal_id);
+
+    @GET("top/manga/{mal_id}/favorite")
+    Call<MangaList> getTopMangasRating(@Path("mal_id") int mangaid);
+
+    @GET("manga/{mal_id}")
+    Call<Manga> getManga(@Path("mal_id") int mal_id);
+
+    @GET("top/characters/{mal_id}")
+    Call<CharacterList> getTopCharacterRating(@Path("mal_id") int character_id);
+
+    @GET("character/{mal_id}")
+    Call<Character> getCharacter(@Path("mal_id") int mal_id);
 
 
 

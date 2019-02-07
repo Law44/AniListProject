@@ -17,37 +17,35 @@ import android.view.ViewGroup;
 
 import com.example.anilistproject.AnimeViewModel;
 import com.example.anilistproject.R;
-import com.example.anilistproject.model.Anime;
+import com.example.anilistproject.model.Character;
 
 
-public class AnimeFragment extends Fragment {
-
+public class CharacterFragment extends Fragment {
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
-    public  AnimeListAdapter animeListAdapter;
+    public  CharacterListAdapter characterListAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View mView = inflater.inflate(R.layout.fragment_rank, container, false);
-
-        mRecyclerView = mView.findViewById(R.id.animeList);
+        View mView = inflater.inflate(R.layout.fragment_character, container, false);
+        mRecyclerView = mView.findViewById(R.id.characterList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        animeListAdapter = new AnimeListAdapter();
+        characterListAdapter = new CharacterListAdapter();
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
+        mViewModel.getTopCharacterRating().observe(this, new Observer<PagedList<Character>>() {
             @Override
-            public void onChanged(@Nullable PagedList<Anime> pagedList) {
-                animeListAdapter.submitList(pagedList);
+            public void onChanged(@Nullable PagedList<Character> pagedList) {
+                characterListAdapter.submitList(pagedList);
             }
         });
 
-        mRecyclerView.setAdapter(animeListAdapter);
+        mRecyclerView.setAdapter(characterListAdapter);
 
         return mView;
     }
