@@ -49,11 +49,11 @@ public class RankFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
 
-        animeListAdapter = new AnimeListAdapter(application);
+        animeListAdapter = new AnimeListAdapter();
 
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopAll().observe(this, new Observer<PagedList<Anime>>() {
+        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
             @Override
             public void onChanged(@Nullable PagedList<Anime> pagedList) {
                 animeListAdapter.submitList(pagedList);

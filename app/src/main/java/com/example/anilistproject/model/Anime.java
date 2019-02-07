@@ -17,4 +17,6 @@ public class Anime {
     public int rank;
     public String type;
 
+
+
 }

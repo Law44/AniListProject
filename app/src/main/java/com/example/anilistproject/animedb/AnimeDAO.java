@@ -40,7 +40,7 @@ public  interface AnimeDAO {
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     void insertCharacter(Character character);
 
-    @Query("SELECT * FROM character LIMIT 50")
+    @Query("SELECT * FROM character WHERE name NOT like 'Sasuke Uchiha' and name NOT like 'Ichigo Kurosaki'  LIMIT 50  ")
     DataSource.Factory<Integer, Character> getAllCharacter();
 
     @Query("SELECT * FROM character WHERE mal_id=:mal_id")
