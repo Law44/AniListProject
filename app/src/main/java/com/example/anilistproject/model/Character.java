@@ -7,10 +7,11 @@ import android.support.annotation.NonNull;
 
 import com.example.anilistproject.animedb.GithubTypeConverters;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Character {
+public class Character implements Serializable {
     @PrimaryKey()
     @NonNull
     public int mal_id;
@@ -20,6 +21,7 @@ public class Character {
     public int rank;
     public String name;
     public String animeName;
+    public String about;
 
     @TypeConverters(GithubTypeConverters.class)
     public List<Animeography> animeography;

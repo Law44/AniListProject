@@ -1,7 +1,11 @@
 package com.example.anilistproject.view;
 
 import android.arch.paging.PagedListAdapter;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +19,13 @@ import com.example.anilistproject.GlideApp;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
 
-public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.AnimeListViewHolder> {
+import java.io.Serializable;
 
-    public  AnimeListAdapter (){
+public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.AnimeListViewHolder> {
+    Context  context;
+    public  AnimeListAdapter (Context context){
         super(DIFF_CALLBACK);
+        this.context = context;
     }
 
     @NonNull
@@ -29,8 +36,8 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AnimeListViewHolder holder, int position) {
-        Anime anime = getItem(position); // NO -> animeList.get(position);
+    public void onBindViewHolder(@NonNull final AnimeListViewHolder holder, int position) {
+        final Anime anime = getItem(position); // NO -> animeList.get(position);
 
 
         holder.title.setText(anime.title);
@@ -43,6 +50,17 @@ public class AnimeListAdapter extends PagedListAdapter<Anime, AnimeListAdapter.A
         else {
             holder.episodes.setText(anime.type);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View view) {
+
+                Intent  intent = new Intent(context, AnimeActivity.class);
+                intent.putExtra("anime",anime);
+                intent.putExtra("episodes",holder.episodes.getText().toString());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     class AnimeListViewHolder extends RecyclerView.ViewHolder {

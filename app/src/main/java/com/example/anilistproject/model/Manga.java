@@ -5,8 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 @Entity
-public class Manga {
+public class Manga  implements Serializable {
     @PrimaryKey()
     @NonNull
     public int mal_id;
@@ -17,5 +19,6 @@ public class Manga {
 
     public int rank;
     public String type;
+    public String synopsis;
 
 }

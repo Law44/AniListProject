@@ -4,8 +4,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 @Entity
-public class Anime {
+public class Anime implements Serializable {
     @PrimaryKey()
     @NonNull
     public int mal_id;
@@ -16,6 +18,7 @@ public class Anime {
     public int episodes;
     public int rank;
     public String type;
+    public String synopsis;
 
 
 

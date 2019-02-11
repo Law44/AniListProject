@@ -34,7 +34,7 @@ public class MangaFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        mangaListAdapter = new MangaListAdapter();
+        mangaListAdapter = new MangaListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
         mViewModel.getTopMangaRating().observe(this, new Observer<PagedList<Manga>>() {
