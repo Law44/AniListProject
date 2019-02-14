@@ -1,6 +1,8 @@
 package com.example.anilistproject.view;
 
 import android.arch.paging.PagedListAdapter;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterListAdapter extends PagedListAdapter<Character, CharacterListAdapter.CharacterListViewHolder> {
+    Context context;
 
-
-    public CharacterListAdapter(){
+    public CharacterListAdapter(Context context){
         super(DIFF_CALLBACK);
+        this.context = context;
     }
 
     @NonNull
@@ -34,14 +37,29 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CharacterListAdapter.CharacterListViewHolder holder, int position) {
-        Character chara = getItem(position);
+    public void onBindViewHolder(@NonNull final CharacterListAdapter.CharacterListViewHolder holder, int position) {
+        final Character chara = getItem(position);
 
         holder.title.setText(chara.name);
         holder.anime.setText(chara.animeography.get(0).name);
         GlideApp.with(holder.itemView.getContext()).load( chara.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
 
         holder.rank.setText(String.valueOf("Rank: " + (position+1)));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View view) {
+
+                Intent intent = new Intent(context, CharacterActivity.class);
+                intent.putExtra("name" ,chara.name);
+                intent.putExtra("anime" ,chara.animeography.get(0).name);
+                intent.putExtra("image",chara.image_url);
+                intent.putExtra("rank",holder.rank.getText().toString());
+                intent.putExtra("synopsis",chara.about);
+
+                context.startActivity(intent);
+
+            }
+        });
     }
 
 

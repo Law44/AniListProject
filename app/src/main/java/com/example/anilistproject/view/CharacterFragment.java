@@ -35,7 +35,7 @@ public class CharacterFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        characterListAdapter = new CharacterListAdapter();
+        characterListAdapter = new CharacterListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
         mViewModel.getTopCharacterRating().observe(this, new Observer<PagedList<Character>>() {

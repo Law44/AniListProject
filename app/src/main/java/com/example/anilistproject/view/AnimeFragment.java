@@ -37,7 +37,7 @@ public class AnimeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        animeListAdapter = new AnimeListAdapter();
+        animeListAdapter = new AnimeListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
         mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
