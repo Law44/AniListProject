@@ -45,4 +45,7 @@ dependencies {
 
     implementation "android.arch.paging:runtime:1.0.1"
 
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+
 }
