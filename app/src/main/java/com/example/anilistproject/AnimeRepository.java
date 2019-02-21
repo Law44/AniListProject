@@ -41,11 +41,11 @@ public class AnimeRepository {
         mAnimeDao = AnimeRoomDatabase.getDatabase(application).animeDAO();
     }
 
-    public LiveData<PagedList<Anime>> getTopAnimesRating(){
+    public LiveData<PagedList<Anime>> getTopAnimesRating(String query){
         refreshAnimeList();
         PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
         animeList = new LivePagedListBuilder<>(
-                mAnimeDao.getAllAnimes(), /* page size */ conf).build();
+                mAnimeDao.getAllAnimes(query), /* page size */ conf).build();
         return animeList;
     }
 
@@ -103,11 +103,11 @@ public class AnimeRepository {
 
 
     /*------------------------------Manga-----------------------*/
-    public LiveData<PagedList<Manga>> getTopMangaRating(){
+    public LiveData<PagedList<Manga>> getTopMangaRating(String query){
         refreshMangaList();
         PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
         mangaList = new LivePagedListBuilder<>(
-                mAnimeDao.getAllManga(), /* page size */ conf).build();
+                mAnimeDao.getAllManga(query), /* page size */ conf).build();
         return mangaList;
     }
 
@@ -166,11 +166,11 @@ public class AnimeRepository {
     }
 
     /*------------------------------Character-----------------------*/
-    public LiveData<PagedList<Character>> getTopCharacterRating(){
+    public LiveData<PagedList<Character>> getTopCharacterRating(String query){
         refreshCharacterList();
         PagedList.Config conf = new PagedList.Config.Builder().setEnablePlaceholders(true).setInitialLoadSizeHint(100).setPageSize(10).build();
         characterList = new LivePagedListBuilder<>(
-                mAnimeDao.getAllCharacter(), /* page size */ conf).build();
+                mAnimeDao.getAllCharacter(query), /* page size */ conf).build();
         return characterList;
     }
 

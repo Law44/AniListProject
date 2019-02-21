@@ -42,10 +42,10 @@ public class AnimeViewModel extends AndroidViewModel {
 //        }, 50);
 //    }
 
-    public LiveData<PagedList<Anime>> getTopAnimesRating(){ return animeRepository.getTopAnimesRating(); }
+    public LiveData<PagedList<Anime>> getTopAnimesRating(String query){ return animeRepository.getTopAnimesRating(query); }
 
-    public LiveData<PagedList<Manga>> getTopMangaRating(){ return animeRepository.getTopMangaRating(); }
+    public LiveData<PagedList<Manga>> getTopMangaRating(String query){ return animeRepository.getTopMangaRating(query); }
 
-    public LiveData<PagedList<Character>> getTopCharacterRating(){ return animeRepository.getTopCharacterRating(); }
+    public LiveData<PagedList<Character>> getTopCharacterRating(String query){ return animeRepository.getTopCharacterRating(query); }
 
 }

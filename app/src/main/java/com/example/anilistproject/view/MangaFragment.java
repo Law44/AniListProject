@@ -18,11 +18,13 @@ import com.example.anilistproject.AnimeViewModel;
 import com.example.anilistproject.R;
 import com.example.anilistproject.model.Manga;
 
-public class MangaFragment extends Fragment {
+public class MangaFragment extends Fragment implements PrincipalActivity.QueryChangeListener {
 
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
     public  MangaListAdapter mangaListAdapter;
+    Observer observer;
+
 
     @Nullable
     @Override
@@ -37,15 +39,22 @@ public class MangaFragment extends Fragment {
         mangaListAdapter = new MangaListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopMangaRating().observe(this, new Observer<PagedList<Manga>>() {
+        observer = new Observer<PagedList<Manga>>() {
             @Override
             public void onChanged(@Nullable PagedList<Manga> pagedList) {
                 mangaListAdapter.submitList(pagedList);
             }
-        });
+        };
+        mViewModel.getTopMangaRating("").observe(this, observer);
 
         mRecyclerView.setAdapter(mangaListAdapter);
 
         return mView;
+    }
+
+    public void onQueryChange(String query){
+        mViewModel.getTopMangaRating("").removeObserver(observer);
+
+        mViewModel.getTopMangaRating("%" + query + "%").observe(this, observer);
     }
 }

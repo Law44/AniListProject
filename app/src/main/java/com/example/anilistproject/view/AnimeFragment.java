@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,13 @@ import com.example.anilistproject.R;
 import com.example.anilistproject.model.Anime;
 
 
-public class AnimeFragment extends Fragment {
+public class AnimeFragment extends Fragment
+implements PrincipalActivity.QueryChangeListener {
 
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
     public  AnimeListAdapter animeListAdapter;
+    Observer observer;
 
     @Nullable
     @Override
@@ -40,15 +41,23 @@ public class AnimeFragment extends Fragment {
         animeListAdapter = new AnimeListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopAnimesRating().observe(this, new Observer<PagedList<Anime>>() {
+        observer = new Observer<PagedList<Anime>>() {
             @Override
             public void onChanged(@Nullable PagedList<Anime> pagedList) {
                 animeListAdapter.submitList(pagedList);
             }
-        });
+        };
+
+        mViewModel.getTopAnimesRating("").observe(this, observer);
 
         mRecyclerView.setAdapter(animeListAdapter);
 
         return mView;
+    }
+
+    public void onQueryChange(String query){
+        mViewModel.getTopAnimesRating("").removeObserver(observer);
+
+        mViewModel.getTopAnimesRating("%" + query + "%").observe(this, observer);
     }
 }

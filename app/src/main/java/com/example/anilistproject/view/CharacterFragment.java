@@ -20,10 +20,11 @@ import com.example.anilistproject.R;
 import com.example.anilistproject.model.Character;
 
 
-public class CharacterFragment extends Fragment {
+public class CharacterFragment extends Fragment implements PrincipalActivity.QueryChangeListener{
     private AnimeViewModel mViewModel;
     private RecyclerView mRecyclerView;
     public  CharacterListAdapter characterListAdapter;
+    Observer observer;
 
     @Nullable
     @Override
@@ -38,15 +39,23 @@ public class CharacterFragment extends Fragment {
         characterListAdapter = new CharacterListAdapter(getActivity());
 
         mViewModel = ViewModelProviders.of(this).get(AnimeViewModel.class);
-        mViewModel.getTopCharacterRating().observe(this, new Observer<PagedList<Character>>() {
+        observer = new Observer<PagedList<Character>>() {
             @Override
             public void onChanged(@Nullable PagedList<Character> pagedList) {
                 characterListAdapter.submitList(pagedList);
             }
-        });
+        };
+
+        mViewModel.getTopCharacterRating("").observe(this, observer);
 
         mRecyclerView.setAdapter(characterListAdapter);
 
         return mView;
+    }
+
+    public void onQueryChange(String query){
+        mViewModel.getTopCharacterRating("").removeObserver(observer);
+
+        mViewModel.getTopCharacterRating("%" + query + "%").observe(this, observer);
     }
 }

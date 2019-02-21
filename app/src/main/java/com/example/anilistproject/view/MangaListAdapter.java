@@ -42,7 +42,7 @@ public class MangaListAdapter extends PagedListAdapter<Manga, MangaListAdapter.M
         holder.title.setText(manga.title);
         holder.score.setText(String.valueOf("Score: " + manga.score));
         GlideApp.with(holder.itemView.getContext()).load( manga.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
-        holder.rank.setText(String.valueOf("Rank: " + (position+1)));
+        holder.rank.setText(String.valueOf("Rank: " + manga.rank));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

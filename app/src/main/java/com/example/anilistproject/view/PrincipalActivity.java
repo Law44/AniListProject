@@ -28,11 +28,17 @@ import java.util.ArrayList;
 
 public class PrincipalActivity extends AppCompatActivity {
 
+    interface QueryChangeListener {
+        void onQueryChange(String query);
+    }
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
 
     private MaterialSearchView searchView;
+
+    QueryChangeListener queryChangeListener;
 
 
     @Override
@@ -58,14 +64,13 @@ public class PrincipalActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Snackbar.make(findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG)
-                        .show();
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
+                queryChangeListener.onQueryChange(newText);
                 return false;
             }
         });
@@ -121,13 +126,19 @@ public class PrincipalActivity extends AppCompatActivity {
 
             switch (position){
                 case 0:
-                    return new AnimeFragment();
+                    Fragment fragment = new AnimeFragment();
+                    queryChangeListener = (QueryChangeListener) fragment;
+                    return fragment;
 
                 case 1:
-                    return new MangaFragment();
+                    Fragment fragment2 = new MangaFragment();
+                    queryChangeListener = (QueryChangeListener) fragment2;
+                    return fragment2;
 
                 case 2:
-                    return new CharacterFragment();
+                    Fragment fragment3 = new CharacterFragment();
+                    queryChangeListener = (QueryChangeListener) fragment3;
+                    return fragment3;
             }
 
             return null;
@@ -139,19 +150,5 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
-            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            if (matches != null && matches.size() > 0) {
-                String searchWrd = matches.get(0);
-                if (!TextUtils.isEmpty(searchWrd)) {
-                    searchView.setQuery(searchWrd, false);
-                }
-            }
 
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }
