@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.anilistproject.R;
@@ -73,12 +75,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                queryChangeListener1.onQueryChange(newText);
-                queryChangeListener2.onQueryChange(newText);
                 queryChangeListener3.onQueryChange(newText);
+
                 return false;
             }
         });
+
+
 
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
@@ -132,19 +135,16 @@ public class PrincipalActivity extends AppCompatActivity {
 
             switch (position){
                 case 0:
-                    Fragment fragment = new AnimeFragment();
-                    queryChangeListener1 = (QueryChangeListener) fragment;
-                    return fragment;
+
+                    return new MangaFragment();
 
                 case 1:
-                    Fragment fragment2 = new MangaFragment();
-                    queryChangeListener2 = (QueryChangeListener) fragment2;
-                    return fragment2;
+
+                    return new AnimeFragment();
 
                 case 2:
-                    Fragment fragment3 = new CharacterFragment();
-                    queryChangeListener3 = (QueryChangeListener) fragment3;
-                    return fragment3;
+
+                    return new CharacterFragment();
             }
 
             return null;
@@ -153,6 +153,13 @@ public class PrincipalActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 3;
+        }
+
+        @Override
+        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            queryChangeListener3 = (QueryChangeListener) object;
+
+            super.setPrimaryItem(container, position, object);
         }
     }
 

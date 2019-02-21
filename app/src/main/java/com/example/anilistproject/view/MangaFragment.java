@@ -56,5 +56,9 @@ public class MangaFragment extends Fragment implements PrincipalActivity.QueryCh
         mViewModel.getTopMangaRating("").removeObserver(observer);
 
         mViewModel.getTopMangaRating("%" + query + "%").observe(this, observer);
+        if (query.equals("")){
+            mRecyclerView.scrollToPosition(mangaListAdapter.getItemCount()-1);
+            mRecyclerView.scrollToPosition(0);
+        }
     }
 }

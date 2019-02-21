@@ -57,5 +57,10 @@ public class CharacterFragment extends Fragment implements PrincipalActivity.Que
         mViewModel.getTopCharacterRating("").removeObserver(observer);
 
         mViewModel.getTopCharacterRating("%" + query + "%").observe(this, observer);
+
+        if (query.equals("")){
+            mRecyclerView.scrollToPosition(characterListAdapter.getItemCount()-1);
+            mRecyclerView.scrollToPosition(0);
+        }
     }
 }

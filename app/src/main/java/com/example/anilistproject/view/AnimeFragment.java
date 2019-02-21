@@ -59,5 +59,10 @@ implements PrincipalActivity.QueryChangeListener {
         mViewModel.getTopAnimesRating("").removeObserver(observer);
 
         mViewModel.getTopAnimesRating("%" + query + "%").observe(this, observer);
+
+        if (query.equals("")){
+            mRecyclerView.scrollToPosition(animeListAdapter.getItemCount()-1);
+            mRecyclerView.scrollToPosition(0);
+        }
     }
 }
