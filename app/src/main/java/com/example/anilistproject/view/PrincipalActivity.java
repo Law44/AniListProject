@@ -41,8 +41,6 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
 
-    QueryChangeListener queryChangeListener1;
-    QueryChangeListener queryChangeListener2;
     QueryChangeListener queryChangeListener3;
 
 
