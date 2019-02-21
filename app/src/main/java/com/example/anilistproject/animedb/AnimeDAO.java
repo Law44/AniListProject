@@ -64,7 +64,7 @@ public  abstract class AnimeDAO {
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     public abstract void insertCharacter(Character character);
 
-    @Query("SELECT * FROM character WHERE name NOT like 'Sasuke Uchiha' and name NOT like 'Ichigo Kurosaki'  LIMIT 50  ")
+    @Query("SELECT * FROM character WHERE name NOT like 'Sasuke Uchiha' and name NOT like 'Ichigo Kurosaki' ORDER BY rank LIMIT 50  ")
     public abstract DataSource.Factory<Integer, Character> getAllCharacter();
 
     @Query("SELECT * FROM character WHERE name LIKE :query ORDER BY rank ASC LIMIT 50")

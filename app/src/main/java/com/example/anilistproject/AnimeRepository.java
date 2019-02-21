@@ -215,7 +215,9 @@ public class AnimeRepository {
                             @Override
                             public void run() {
                                 if(response.body()!=null) {
-                                    mAnimeDao.insertCharacter(response.body());
+                                    Character character1 = response.body();
+                                    character1.rank = character.rank;
+                                    mAnimeDao.insertCharacter(character1);
                                 }
                             }
                         });

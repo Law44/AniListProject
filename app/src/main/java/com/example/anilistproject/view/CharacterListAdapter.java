@@ -44,7 +44,7 @@ public class CharacterListAdapter extends PagedListAdapter<Character, CharacterL
         holder.anime.setText(chara.animeography.get(0).name);
         GlideApp.with(holder.itemView.getContext()).load( chara.image_url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.placeholder).into(holder.poster);
 
-        holder.rank.setText(String.valueOf("Rank: " + (position+1)));
+        holder.rank.setText(String.valueOf("Rank: " + chara.rank));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public  void onClick(View view) {

@@ -24,6 +24,7 @@ import com.example.anilistproject.R;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class PrincipalActivity extends AppCompatActivity {
@@ -38,7 +39,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
 
-    QueryChangeListener queryChangeListener;
+    QueryChangeListener queryChangeListener1;
+    QueryChangeListener queryChangeListener2;
+    QueryChangeListener queryChangeListener3;
 
 
     @Override
@@ -70,7 +73,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                queryChangeListener.onQueryChange(newText);
+                queryChangeListener1.onQueryChange(newText);
+                queryChangeListener2.onQueryChange(newText);
+                queryChangeListener3.onQueryChange(newText);
                 return false;
             }
         });
@@ -86,6 +91,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 //Do some magic
             }
         });
+        tabLayout.getTabAt(1).select();
     }
 
     @Override
@@ -127,17 +133,17 @@ public class PrincipalActivity extends AppCompatActivity {
             switch (position){
                 case 0:
                     Fragment fragment = new AnimeFragment();
-                    queryChangeListener = (QueryChangeListener) fragment;
+                    queryChangeListener1 = (QueryChangeListener) fragment;
                     return fragment;
 
                 case 1:
                     Fragment fragment2 = new MangaFragment();
-                    queryChangeListener = (QueryChangeListener) fragment2;
+                    queryChangeListener2 = (QueryChangeListener) fragment2;
                     return fragment2;
 
                 case 2:
                     Fragment fragment3 = new CharacterFragment();
-                    queryChangeListener = (QueryChangeListener) fragment3;
+                    queryChangeListener3 = (QueryChangeListener) fragment3;
                     return fragment3;
             }
 
